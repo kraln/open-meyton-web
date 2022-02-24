@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="102mm" height="102mm"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="102mm" height="102mm" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 102 102" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   
+    .str2 {stroke:#141516;stroke-width:0.75}
+    .str0 {stroke:#141516;stroke-width:2}
+    .str1 {stroke:#141516;stroke-width:4}
+    .fil0 {fill:none}
+   
+  </style>
+ </defs>
+ <g id="SvgjsG1001">
+  <metadata id="SvgjsMetadata1000"></metadata>
+  <ellipse class="fil0 str0" cx="50.9" cy="50.9682" rx="50" ry="49.9998"></ellipse>
+  <line class="fil0 str1" x1="0.6" y1="50.9998" x2="45.5" y2="50.9998"></line>
+  <line class="fil0 str1" x1="101.1" y1="51" x2="56.5" y2="51"></line>
+  <line class="fil0 str2" x1="45.5" y1="51" x2="56.5" y2="51"></line>
+  <line class="fil0 str2" x1="51" y1="56.5" x2="51" y2="45.5"></line>
+  <line class="fil0 str1" x1="51.3924" y1="101.098" x2="51" y2="56.5"></line>
+  <line class="fil0 str1" x1="51.3924" y1="101.098" x2="51" y2="56.5"></line>
+  <line class="fil0 str1" x1="51" y1="45.5" x2="50.6076" y2="0.9018"></line>
+ </g>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: invert(100%); } }
+</style></svg>
