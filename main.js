@@ -292,7 +292,10 @@
         }); });
   }
 
-
+  function setupImpressum()
+  {
+    $("#content").append($('<div class="container imprint">').load("impressum." + window.config.site_lang + ".html"));
+  }
 
   /* main dispatch */
   function setupPage(whichPage)
@@ -312,7 +315,7 @@
     }
     else if (whichPage == "impressum")
     {
-      // impressum stuff
+      setupImpressum(); 
     } 
     else if (whichPage == "competition")
     {

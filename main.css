@@ -113,3 +113,8 @@ div.shooter-view div.series-detail-head h5 {
   margin-left: 0;
   margin-right: 0;
 }
+
+div.imprint {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}

@@ -274,8 +274,8 @@
 
       <div class="container" id="impressum-template">
         <div class="row">
-          <div class="col">
-            impressum
+          <div class="col contents">
+            
           </div>
         </div>
       </div>
