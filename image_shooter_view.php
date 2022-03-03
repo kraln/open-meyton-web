@@ -39,6 +39,14 @@ if (!array_key_exists('point', $points))
   die();
 }
 
+/* different kinds of targets */
+$variant = 0;
+if (array_key_exists('variant', $points))
+{
+  $variant = $points['variant'];
+}
+
+
 foreach($points['point'] as $idx => $ps)
 {
   $point = explode(",", $ps);
@@ -53,6 +61,66 @@ $dim = ($max_max * 2) + 20;
 
 ?>
 <svg width="1000" height="1000" viewBox="<?php echo $dim/-2 . " " . $dim/-2 . " " . $dim . " ". $dim ?>" xmlns="http://www.w3.org/2000/svg" version="1.1">
+
+<?php
+
+switch ($variant) {
+  /* air rifle */
+  case 1:
+?>
+<!-- background circles -->
+<circle cx="0" cy="0" r="499" fill="white" stroke="grey" stroke-width="2" />
+<circle cx="0" cy="0" r="450" fill="white" stroke="grey" stroke-width="2" />
+<circle cx="0" cy="0" r="400" fill="white" stroke="grey" stroke-width="2" />
+<circle cx="0" cy="0" r="350" fill="black" />
+<circle cx="0" cy="0" r="350" stroke="grey" stroke-width="2" />
+<circle cx="0" cy="0" r="300" stroke="grey" stroke-width="2" />
+<circle cx="0" cy="0" r="250" stroke="grey" stroke-width="2" />
+<circle cx="0" cy="0" r="200" stroke="grey" stroke-width="2" />
+<circle cx="0" cy="0" r="200" stroke="grey" stroke-width="2" />
+<circle cx="0" cy="0" r="200" stroke="grey" stroke-width="2" />
+<circle cx="0" cy="0" r="150" stroke="grey" stroke-width="2" />
+<circle cx="0" cy="0" r="100" stroke="grey" stroke-width="2" />
+<circle cx="0" cy="0" r="25" stroke="grey" stroke-width="3" />
+<!-- numbers -->
+<text x="125"  y="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">8</text>
+<text x="175"  y="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">7</text>
+<text x="225"  y="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">6</text>
+<text x="275"  y="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">5</text>
+<text x="325"  y="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">4</text>
+<text x="375"  y="0" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="2em">3</text>
+<text x="425"  y="0" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="2em">2</text>
+<text x="475"  y="0" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="2em">1</text>
+<text x="-125" y="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">8</text>
+<text x="-175" y="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">7</text>
+<text x="-225" y="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">6</text>
+<text x="-275" y="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">5</text>
+<text x="-325" y="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">4</text>
+<text x="-375" y="0" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="2em">3</text>
+<text x="-425" y="0" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="2em">2</text>
+<text x="-475" y="0" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="2em">1</text>
+<text y="125"  x="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">8</text>
+<text y="175"  x="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">7</text>
+<text y="225"  x="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">6</text>
+<text y="275"  x="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">5</text>
+<text y="325"  x="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">4</text>
+<text y="375"  x="0" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="2em">3</text>
+<text y="425"  x="0" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="2em">2</text>
+<text y="475"  x="0" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="2em">1</text>
+<text y="-125" x="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">8</text>
+<text y="-175" x="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">7</text>
+<text y="-225" x="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">6</text>
+<text y="-275" x="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">5</text>
+<text y="-325" x="0" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="2em">4</text>
+<text y="-375" x="0" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="2em">3</text>
+<text y="-425" x="0" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="2em">2</text>
+<text y="-475" x="0" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="2em">1</text>
+<!-- hits -->
+<?php
+    break;
+  /* air pistol, pistol 25m */
+  default:
+?>
 <!-- background circles -->
 <circle cx="0" cy="0" r="499" fill="white" stroke="grey" stroke-width="2" />
 <circle cx="0" cy="0" r="450" fill="white" stroke="grey" stroke-width="2" />
@@ -105,13 +173,21 @@ $dim = ($max_max * 2) + 20;
 <text y="-475" x="0" dominant-baseline="middle" text-anchor="middle" fill="black">1</text>
 <!-- hits -->
 <?php
+  break;
+}
 
 foreach($points['point'] as $idx => $ps)
 {
   $point = explode(",", $ps); 
   $color_lt = "red";
   $color_dk = "darkred";
-  if (sqrt(pow($point[1], 2) + pow($point[0], 2)) >= 50)
+  $threshold = 50;
+  if ($variant == 1)
+  {
+    /* lower threshold for rifles */
+    $threshold = 35; 
+  }
+  if (sqrt(pow($point[1], 2) + pow($point[0], 2)) >= $threshold)
   {
     $color_lt = "yellow";
     $color_dk = "darkgoldenrod";

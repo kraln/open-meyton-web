@@ -114,6 +114,20 @@
         };
 
         /* 
+         * depending on the discipline id, we need to render different variants of
+         * the target
+         *
+         * TODO: configurable?
+         *
+         * */
+        let variant = window.config.target_disciplines[data.record.Discipline.ID];
+
+        if (variant === undefined)
+        {
+          variant = 0;
+        }
+
+        /* 
          * due to a quirk, we need to calculate the capped values based on the shots
          * as the xml does not give us the rounded data
          */
@@ -218,7 +232,7 @@
         const magic_fudge = 5; /* do not question the source of the magic fudge */
         var divisor = (dresult / sresult / magic_fudge);
 
-        data.image_point_list = data.record.Aimings.AimingData.Shot.map(point => {       
+        data.image_point_list = "variant=" + variant + "&" + data.record.Aimings.AimingData.Shot.map(point => {       
           return "point[]=" + Math.floor(point.Coordinate.CCoordinate.X/divisor)+ "," + Math.floor(point.Coordinate.CCoordinate.Y/divisor); 
         }).join("&");
 
@@ -268,8 +282,8 @@
           const totalseries = data.record.Aimings.AimingData.Series.length;
           const shotsperseries = totalshots/totalseries;
           let shots = data.record.Aimings.AimingData.Shot.slice(shotsperseries*(series-1),shotsperseries*series); 
-          return shots.map(point => {       
-            return "point[]=" + Math.floor(point.Coordinate.CCoordinate.X/divisor) + "," + Math.floor(point.Coordinate.CCoordinate.Y/divisor); 
+          return  "variant=" + variant + "&" + shots.map(point => {       
+           return "point[]=" + Math.floor(point.Coordinate.CCoordinate.X/divisor) + "," + Math.floor(point.Coordinate.CCoordinate.Y/divisor); 
           }).join("&");
         };
  

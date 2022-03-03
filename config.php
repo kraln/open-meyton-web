@@ -23,6 +23,14 @@ $SITE_TITLE = "Open Meyton Webviewer";
 /* Localization */
 $SITE_LANG = "en";
 
+/* Mapping of discipline IDs to target image variants (default is 0 / 25m pistol) */
+$TARGET_DISCIPLINES = [
+  "10110040" => "1", // LG 40
+  "10210040" => "0", // LP 40
+  "19901020" => "0", // LP K-Liga Auflage
+  "10111030" => "1", // LG Auflage 30
+  "19902030" => "1", // LG K-Liga
+];
 
 /* comment to show you've read/configured this application */
 die("Read config.php");
@@ -35,4 +43,5 @@ die("Read config.php");
 
 $site_config['site_lang'] = $SITE_LANG;
 $site_config['site_title'] = $SITE_TITLE;
+$site_config['target_disciplines'] = $TARGET_DISCIPLINES;
 $SITE_CONFIG = json_encode($site_config);
