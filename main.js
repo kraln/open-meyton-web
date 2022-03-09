@@ -46,30 +46,45 @@
   {
     let template = $("nav").last().prop("outerHTML");
 
-    let back_link = false;
+    let entrant_back_link = false;
+    let entrant_back_discipline = 0;
     /* show only if we're looking at a specific entry */
     if (args[0] == "#entrant")
     {
-      back_link = args[1].substring(0, args[1].lastIndexOf("/"));
+      entrant_back_link = args[1].substring(0, args[1].lastIndexOf("/"));
+      entrant_back_discipline = 0;
     } 
 
-    let merged   = { ...window.config, ...window.locale, back_link};
+    let merged   = { ...window.config, ...window.locale, entrant_back_link, entrant_back_discipline};
     let rendered = Mustache.render(template, merged);
     document.getElementById('content').innerHTML = rendered;
   }
 
   function setupCompetitionList()
   {
-    $.get("data_competition_list.php", function(data) {
-        var template = document.getElementById('competitions-template').outerHTML;
 
+    var template = document.getElementById('competitions-template').outerHTML;
+
+    /*
+     * check if we already have the competition data loaded
+     * it's pretty heavy, so just used the cached version
+     */
+    if (window.competition_list)
+    {
+      let merged   = { ...window.config, ...window.locale, ...window.competition_list};
+      var rendered = Mustache.render(template, merged);
+      document.getElementById('content').insertAdjacentHTML('beforeend', rendered);    
+    }
+    else 
+    {
+      $.get("data_competition_list.php", function(data) {
         data.date_trimmed = function() { return this.date.date.slice(0, 10); };
-
+        window.competition_list = data;
         let merged   = { ...window.config, ...window.locale, ...data};
-        var rendered = Mustache.render(template, merged);
-
+        var rendered = Mustache.render(template, merged);  
         document.getElementById('content').insertAdjacentHTML('beforeend', rendered);
-        }, "json");
+      }, "json");
+    }
   }
 
   function setupCompetitionView(which)
@@ -83,16 +98,59 @@
         data.result = function() { return Math.floor(this.data.result / 10); };
         data.series_result = function() { return Math.floor(this.result.Result / 10); };
 
-        /* need to sort and index results */
+        /* need to sort results */
         data.results.sort((a, b) => { return b.data.result - a.data.result; });
-        data.results.forEach((e, i) => { e.place = i+1; });        
+
+        /* need to split into groups by disciplines and classes */
+        let disciplines = new Set(data.results.map(d => { return d.data.disciplineID;}));
+        let classes = new Set(data.results.map(d => { return d.data.matchclassID;}));  
+        var byDiscipline = {};
+
+        data.results.forEach(d => { 
+          disciplines.forEach(di => {
+            if (d.data.disciplineID == di)
+            {
+              if (!(byDiscipline[di] instanceof Object))
+              {
+                byDiscipline[di] = { disciplineName: d.data.discipline, classes: {} };
+              }
+              classes.forEach(cl => {              
+                if(d.data.matchclassID == cl)
+                {
+                  if (!(byDiscipline[di].classes[cl] instanceof Object))
+                  {
+                    byDiscipline[di].classes[cl] = {className: d.data.matchclass, rankings: []};
+                  }
+                  byDiscipline[di].classes[cl].rankings.push(d);
+                }
+              });        
+            }
+          }); 
+        });
+
+        data.by_discipline = Object.keys(byDiscipline).map(prop => byDiscipline[prop]);
+        data.by_class = function() { return Object.keys(this.classes).map(prop => this.classes[prop]); };
+
+        console.log(data.by_discipline);
+        data.results.forEach((e, i) => { e.place_overall = i+1; });
+
+        for (var d in data.by_discipline)
+        {
+          for (var c in data.by_discipline[d].classes)
+          {
+            let place = 1;
+            data.by_discipline[d].classes[c].rankings.forEach(r => {
+              r.place_class = place++;
+            });
+          }
+        }
 
         let merged   = { ...window.config, ...window.locale, ...data};
         var rendered = Mustache.render(template, merged);
 
         document.getElementById('content').insertAdjacentHTML('beforeend', rendered);
         }, "json")
-        .done(() => { $("#content tbody tr").first().addClass("table-success"); })
+        .done(() => { $("#content tbody").each(function() { $(this).find("tr").first().addClass("table-success"); }) })
         .done(() => { $("#content span.flag").each(function(e) {
           var tlc = $(this).text();
           if (tlc == "GER") { tlc = "DEU"; } // sigh
@@ -273,9 +331,6 @@
           return res;
         };
 
-
-
-
         data.series_image_point_list = function() {
           const series = this['@attributes'].SeriesID;
           const totalshots = data.record.Aimings.AimingData.Shot.length;
@@ -338,7 +393,7 @@
     else if (whichPage == "entrant")
     {
       setupEntrantView(args[1], args[2]);
-    } 
+    }
     else
     {
       // default / competition list

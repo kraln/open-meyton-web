@@ -80,29 +80,31 @@
               <button class="btn btn-outline-success" type="submit">{{search_button}}</button>
             </form>
 {{ /show_search }} 
-{{ #back_link }}
-            <a class="btn me-2 btn-outline-secondary" href="#competition:{{back_link}}" id="back_to_competition">{{link_back_to_competition}}</a>
-{{ /back_link }}
+{{ #entrant_back_link }}
+            <a class="btn me-2 btn-outline-secondary" href="#competition:{{entrant_back_link}}" id="back_to_competition">{{link_back_to_competition}}</a>
+{{ /entrant_back_link }}
 
           </div>
         </div>
       </nav>
 
-      <div class="container" id="competitions-template">
+      <div class="container competitions-list" id="competitions-template">
         <div class="row">
           <div class="col">
             <table class="table table-striped table-hover">
               <thead class="sticky">
                 <tr>
                   <th scope="col">{{header_date}}</th>
-                  <th scope="col">{{header_discipline}}</th>
+                  <th scope="col">{{header_comp_name}}</th>
+                  <th scope="col">{{header_disciplines}}</th>
                 </tr>
               </thead>
               <tbody>
 <!--              {{#competitions}} -->
                 <tr>
                   <td><a href="#competition:{{path}}" class="rowlink">{{date_trimmed}}</a></td>
-                  <td>{{discipline}}</td>
+                  <td>{{name}}</td>
+                  <td>{{disciplines}}</td>
                 </tr>
 <!--              {{/competitions}} -->
               </tbody>              
@@ -114,23 +116,27 @@
       <div class="container competition-view" id="competition-view-template">
         <div class="row">
           <div class="col">
+<!-- {{#by_discipline}} -->
             <div class="">
-              <h1>{{meta.discipline}}</h1>
-              <h2>{{date_trimmed}}</h2>
+              <h1>{{disciplineName}}</h1>
+            </div>
+<!-- {{#by_class}} -->
+            <div class="">
+              <h2>{{className}}</h2>
             </div>
             <table class="table table-striped table-hover table-bordered">
               <thead class="sticky">
                 <tr>
-                  <th scope="col">{{header_place}}</th>
-                  <th scope="col">{{header_competitor}}</th>
-                  <th scope="col">{{header_series}}</th>
-                  <th scope="col">{{header_result}}</th>
+                  <th class="w-10" scope="col">{{header_place}}</th>
+                  <th class="w-40" scope="col">{{header_competitor}}</th>
+                  <th class="w-40" scope="col">{{header_series}}</th>
+                  <th class="w-10" scope="col">{{header_result}}</th>
                 </tr>
               </thead>
               <tbody>
-<!--              {{#results}} -->
+<!-- {{#rankings}} -->
                 <tr>
-                  <td class="place"><a href="#entrant:{{path}}:{{place}}" class="rowlink">{{place}}</a></td>
+                  <td class="place"><a href="#entrant:{{path}}:{{place_class}}" class="rowlink">{{place_class}}</a></td>
                   <td>
                     <div class="d-flex">
                       <div class="flex-column">
@@ -139,7 +145,6 @@
                         </div>
                         <div class="flex-row">
                           <div class="team">{{data.team}}</div>
-                          <div class="class">{{data.matchclass}}</div>
                         </div>
                       </div>
                     </div>
@@ -149,14 +154,16 @@
                     <div class="d-flex">
                       <div class="flex-column">
                         <div class="result">{{result}}</div>
-                        <div class="average">Ø ({{average}})</div>
+                        <div class="average">Ø&nbsp;({{average}})</div>
                       </div>
                     </div>
                   </td>
                 </tr>
-<!--              {{/results}} -->
+<!-- {{/rankings}} -->
               </tbody>              
             </table>
+<!-- {{/by_class}} -->
+<!-- {{/by_discipline}}  -->
           </div>
         </div>
       </div>

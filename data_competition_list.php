@@ -52,14 +52,20 @@ function getLeafDirectories($dir, &$results = array()) {
   return $results;
 }
 
-function XMLpreview($folder, $xmlpath) {
-  /* quick and dirty for previews */
-  $xml = simplexml_load_file($xmlpath);
+function competitionPreview($folder, $xmlpaths) {   
+  foreach ($xmlpaths as $xmlpath)
+  {
+    $xml = simplexml_load_file($xmlpath);
+    $preview['disciplines'][] =  (string)($xml->ResultRecord->Discipline->Name);
+    $preview['discipline_ids'][] = (string)($xml->ResultRecord->Discipline->ID);
+    $preview['date'] = new DateTime($xml->ResultRecord->Aimings->AimingData->Shot->TimeStamp->DateTime);
+  }
   
-  $preview['discipline'] = (string)($xml->ResultRecord->Discipline->Name);
-  $preview['date'] = new DateTime($xml->ResultRecord->Aimings->AimingData->Shot->TimeStamp->DateTime);
+  $preview['disciplines'] = array_values(array_unique($preview['disciplines']));
+  $preview['discipline_ids'] = array_values(array_unique($preview['discipline_ids']));
   $base_path = realpath($GLOBALS['BASE_DIR']);
   $preview['path'] = $GLOBALS['BASE_DIR'] . substr($folder, strlen($base_path));
+  $preview['name'] = ucwords(dirname(substr($folder, strlen($base_path) + 1)));
   
   return $preview;
 }
@@ -67,12 +73,17 @@ function XMLpreview($folder, $xmlpath) {
 /* get all leaf directories */
 $leafDirectories = getLeafDirectories($BASE_DIR);
 
-/* get the first xml in each directory */
-$xmlFiles = array_map(function($el) { return scandir($el)[2]; }, $leafDirectories);
+/* go through each XML in the directory to understand which (virtual) sub-directories
+ * there are, based on which disciplines are present. For the main list, we only surface
+ * the list. */
 
-/* load the xml to understand what each directory is */
+/* grab all XMLs */
 for ($i = 0; $i < count($leafDirectories); ++$i) {
-  $comp_list[] = (XMLpreview($leafDirectories[$i], $leafDirectories[$i] . '/' .  $xmlFiles[$i]));
+  $glob = glob($leafDirectories[$i] . "/*.xml");
+  if ($glob != false)
+  {
+    $comp_list[] = competitionPreview($leafDirectories[$i], $glob);
+  }
 }
 
 /* sort the competition list most recent first */

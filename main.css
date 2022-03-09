@@ -49,6 +49,16 @@ a.rowlink {
 
 }
 
+div.competitions-list {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+div.competition-view {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
 div.competition-view div.competitor {
   font-size: 20px;
   font-weight: 600;
@@ -117,4 +127,12 @@ div.shooter-view div.series-detail-head h5 {
 div.imprint {
   padding-top: 2em;
   padding-bottom: 2em;
+}
+
+th.w-10 {
+  width: 10%;
+}
+
+th.w-40 {
+  width: 40%;
 }

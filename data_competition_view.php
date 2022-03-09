@@ -51,10 +51,12 @@ function parseXML($xmlpath)
   $result['meta']['lane'] = (string)$xml->ResultRecord->Attributes()['LaneNo'];
   $result['meta']['startid'] = (string)$xml->ResultRecord->Attributes()['StartId'];
   $result['matchclass'] = (string)$xml->ResultRecord->MatchClass->Name;
+  $result['matchclassID'] = (string)$xml->ResultRecord->MatchClass->ID;
   $result['club'] = (string)$xml->ResultRecord->Club->Name;
   $result['federation'] = (string)$xml->ResultRecord->Federation->Name;
   $result['team'] = (string)$xml->ResultRecord->Team->Name;
   $result['discipline'] = (string)$xml->ResultRecord->Discipline->Name;
+  $result['disciplineID'] = (string)$xml->ResultRecord->Discipline->ID;
   $result['result'] = (string)$xml->ResultRecord->Total->Result;
   $result['shotcount'] = (string)$xml->ResultRecord->ShotNoTotal;
   $result['date'] = new DateTime($xml->ResultRecord->Aimings->AimingData->Shot->TimeStamp->DateTime);
